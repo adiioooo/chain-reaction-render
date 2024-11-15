@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chain Reaction - Home</title>
+    <style>
+        /* Background and Font Styles */
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #000;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+
+        /* Title Animation */
+        h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #ff0055;
+            text-transform: uppercase;
+            text-shadow: 0px 0px 15px #ff0055, 0px 0px 30px #ff0055;
+            opacity: 0;
+            animation: fadeInTitle 1.5s ease-in-out forwards;
+        }
+
+        @keyframes fadeInTitle {
+            0% { opacity: 0; transform: translateY(-30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Button Styles */
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            color: #000;
+            background-color: #ff0055;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+            box-shadow: 0px 0px 15px #ff0055;
+        }
+
+        button:hover {
+            background-color: #ff5577;
+            transform: scale(1.1);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+        /* Input Field Styling */
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1.1rem;
+            border: 2px solid #ff0055;
+            border-radius: 5px;
+            color: #ffffff;
+            background-color: #222;
+            width: 250px;
+            margin-top: 10px;
+            outline: none;
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+
+        input[type="text"]:focus {
+            box-shadow: 0px 0px 10px #ff0055;
+            transform: scale(1.05);
+        }
+
+        /* Label Styling */
+        label {
+            font-size: 1.2rem;
+            color: #ff77aa;
+            margin-top: 20px;
+            display: block;
+            opacity: 0;
+            animation: fadeInLabel 1.5s ease-in-out forwards;
+            animation-delay: 1s;
+        }
+
+        /* Fade-in animation for label */
+        @keyframes fadeInLabel {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        /* Button and Input Container */
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        /* Start Game Button Animation */
+        button:first-of-type {
+            margin-top: 40px;
+            opacity: 0;
+            animation: fadeInButton 1s ease-in-out forwards;
+            animation-delay: 1.5s;
+        }
+
+        /* Join Game Button Animation */
+        button[type="submit"] {
+            margin-top: 20px;
+            opacity: 0;
+            animation: fadeInButton 1s ease-in-out forwards;
+            animation-delay: 2s;
+        }
+
+        /* Fade-in effect for buttons */
+        @keyframes fadeInButton {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Floating Particles Effect */
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0.8;
+            animation: float 5s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px) scale(1); opacity: 0.5; }
+            50% { transform: translateY(-20px) scale(1.2); opacity: 0.8; }
+            100% { transform: translateY(0px) scale(1); opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <h1>Chain Reaction Game</h1>
+    <button onclick="startNewGame()">Start New Game</button>
+
+    <form onsubmit="joinGame(); return false;">
+        <label for="sessionId">Enter Session ID to Join:</label>
+        <input type="text" id="sessionId" placeholder="Session ID" required>
+        <button type="submit">Join Game</button>
+    </form>
+
+    <script>
+        function startNewGame() {
+            window.location.href = '/new-game';
+        }
+
+        function joinGame() {
+            const sessionId = document.getElementById('sessionId').value;
+            window.location.href = `/game?sessionId=${sessionId}`;
+        }
+
+        // Particle effect with multiple colors
+        function createParticles() {
+            const colors = ['#ff5577', '#ff0055', '#00ff55', '#0055ff', '#ffdd00']; // Colors for particles
+            const particleCount = 100; // Number of particles for full screen effect
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                const size = Math.random() * 5 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                particle.style.left = `${Math.random() * window.innerWidth}px`;
+                particle.style.top = `${Math.random() * window.innerHeight}px`;
+                particle.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.animationDuration = `${Math.random() * 2 + 3}s`;
+                document.body.appendChild(particle);
+            }
+        }
+
+        createParticles();
+    </script>
+</body>
+</html>
